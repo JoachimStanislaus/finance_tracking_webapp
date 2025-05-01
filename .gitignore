@@ -1,1 +1,3 @@
 Backend/venv/
+Backend/src/app.log
+Backend/.env

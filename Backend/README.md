@@ -38,11 +38,9 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Run game
+### Run Backend
 ```sh
-python3 test.py 
-or
-python test.py
+uvicorn main:app --reload
 ```
 
 ### Deactivate the Environment

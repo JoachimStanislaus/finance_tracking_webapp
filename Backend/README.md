@@ -48,3 +48,5 @@ uvicorn main:app --reload
 ```sh
 deactivate
 ```
+
+Follow README.md for db to setup db

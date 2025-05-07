@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-from ..models import Base
+from src.models import Base
 
 
 class User(Base):

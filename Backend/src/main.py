@@ -4,11 +4,11 @@ import logging.config
 
 from fastapi import FastAPI
 
-from auth.router import router as auth_router
+from src.auth.router import router as auth_router
 
 
 # Load logging configuration
-logging.config.fileConfig("../logging.ini")
+logging.config.fileConfig("logging.ini")
 
 # Create a logger
 logger = logging.getLogger(__name__)

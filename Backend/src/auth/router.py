@@ -26,12 +26,19 @@ async def login_for_access_token():
 @router.post("/register")
 async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_db)):
     try:
+        existing_user = db.query(models.User).filter(models.User.email == user.email).first()
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already registered",
+            )
         hashed_pw = utils.hash_password(user.password)
         db_user = models.User(
             email=user.email,
             hashed_password=hashed_pw,
             first_name=user.first_name,
-            last_name=user.last_name
+            last_name=user.last_name,
+            birthday=user.birthday
         )
         db.add(db_user)
         db.commit()

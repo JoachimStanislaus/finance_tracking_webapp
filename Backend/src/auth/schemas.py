@@ -12,10 +12,3 @@ class UserCreate(BaseModel):
 
     class Config:
         orm_mode = True
-
-    @validator('birthday', pre=True)
-    def parse_birthday(cls, value):
-        try:
-            return datetime.strptime(value, "%d/%m/%Y").date()
-        except ValueError:
-            raise ValueError("Birthday must be in DD/MM/YYYY format")

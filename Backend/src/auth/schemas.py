@@ -3,6 +3,7 @@
 from pydantic import BaseModel, EmailStr, validator
 from datetime import datetime, date
 
+
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
@@ -12,3 +13,8 @@ class UserCreate(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

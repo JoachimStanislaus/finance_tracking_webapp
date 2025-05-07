@@ -7,7 +7,6 @@ from ..db import db
 from sqlalchemy.exc import SQLAlchemyError
 
 
-
 router = APIRouter()
 
 # TODO write login, register, reset password and logout apis
@@ -19,14 +18,25 @@ def get_users():
 
 
 @router.post("/login")
-async def login_for_access_token():
-    return True
+async def login_for_access_token(
+    user: schemas.UserLogin, db: Session = Depends(db.get_db)
+):
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if not db_user or not utils.verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
+        )
+
+    token = utils.create_access_token(data={"sub": db_user.email})
+    return {"access_token": token, "token_type": "bearer"}
 
 
 @router.post("/register")
 async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_db)):
     try:
-        existing_user = db.query(models.User).filter(models.User.email == user.email).first()
+        existing_user = (
+            db.query(models.User).filter(models.User.email == user.email).first()
+        )
         if existing_user:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -38,7 +48,7 @@ async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_d
             hashed_password=hashed_pw,
             first_name=user.first_name,
             last_name=user.last_name,
-            birthday=user.birthday
+            birthday=user.birthday,
         )
         db.add(db_user)
         db.commit()
@@ -48,7 +58,9 @@ async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_d
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"An unexpected error occurred: {str(e)}"
+        )
 
 
 @router.post("/reset-password")

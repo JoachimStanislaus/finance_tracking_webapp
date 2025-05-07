@@ -1,5 +1,5 @@
 # DB Models
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, create_engine, Date
 from sqlalchemy.ext.declarative import declarative_base
 
 from src.models import Base
@@ -12,3 +12,4 @@ class User(Base):
     hashed_password = Column(String(255))
     first_name = Column(String(100))
     last_name = Column(String(100))
+    birthday = Column(Date)

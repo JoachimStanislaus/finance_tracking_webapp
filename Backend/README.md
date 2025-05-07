@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### Run Backend
 ```sh
-uvicorn main:app --reload
+PYTHONPATH=. uvicorn src.main:app --reload
 ```
 
 ### Deactivate the Environment

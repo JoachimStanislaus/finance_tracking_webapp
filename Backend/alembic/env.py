@@ -12,7 +12,7 @@ from alembic import context
 from src.models import Base  # Correct import of Base from src/models.py
 from src.auth.models import User  # Import User model
 
-env_path = os.path.join(os.path.dirname(__file__), '..', 'src', '.env')
+env_path = os.path.join(os.path.dirname(__file__), "..", "src", ".env")
 load_dotenv(dotenv_path=env_path)
 
 # this is the Alembic Config object, which provides
@@ -79,9 +79,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

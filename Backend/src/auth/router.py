@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from . import models, schemas, utils
 from ..db import db
@@ -27,7 +28,18 @@ async def login_for_access_token(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
     token = utils.create_access_token(data={"sub": db_user.email})
-    return {"access_token": token, "token_type": "bearer"}
+
+    
+    response = JSONResponse(content={"message": "Login successful"})
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=True,           # Only over HTTPS in production
+        samesite="Lax",        # Or "Strict"/"None" based on your setup
+        max_age=(utils.ACCESS_TOKEN_EXPIRE_MINUTES*60),
+    )
+    return response
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)

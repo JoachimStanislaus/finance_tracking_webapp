@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response
+from fastapi import APIRouter, Depends, HTTPException, status, Response, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
@@ -14,8 +14,8 @@ router = APIRouter()
 
 
 @router.get("/users/")
-def get_users():
-    return True
+def get_users( _ = Depends(utils.get_current_user)):
+    return {"message": "user is logged in"}
 
 
 @router.post("/login", status_code=status.HTTP_200_OK)
@@ -79,6 +79,6 @@ async def reset_password(email: str):
     return True
 
 @router.post("/logout", status_code=200)
-async def logout(response: Response):
+async def logout(response: Response, _ = Depends(utils.get_current_user)):
     response.delete_cookie("access_token")
     return {"message": "Successfully logged out"}

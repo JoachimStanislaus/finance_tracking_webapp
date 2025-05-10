@@ -17,7 +17,7 @@ def get_users():
     return True
 
 
-@router.post("/login")
+@router.post("/login", status_code=status.HTTP_200_OK)
 async def login_for_access_token(
     user: schemas.UserLogin, db: Session = Depends(db.get_db)
 ):
@@ -26,12 +26,11 @@ async def login_for_access_token(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
-
     token = utils.create_access_token(data={"sub": db_user.email})
     return {"access_token": token, "token_type": "bearer"}
 
 
-@router.post("/register")
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_db)):
     try:
         existing_user = (

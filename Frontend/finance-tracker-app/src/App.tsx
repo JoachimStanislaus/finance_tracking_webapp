@@ -1,10 +1,11 @@
-function App() {
+import SignIn from "./common_components/SignIn";
 
+function App() {
   return (
-    <h1>
-      Hello World
-    </h1>
-  )
+    <div>
+      <SignIn />
+    </div>
+  );
 }
 
-export default App
+export default App;

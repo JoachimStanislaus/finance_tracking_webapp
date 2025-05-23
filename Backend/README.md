@@ -49,4 +49,10 @@ PYTHONPATH=. uvicorn src.main:app --reload
 deactivate
 ```
 
+### Update requirements.txt
+
+```sh
+pip freeze > requirements.txt
+```
+
 Follow README.md for db to setup db

@@ -4,5 +4,6 @@ export type SidebarItem = {
   };  
 
 export interface SidebarProps {
-    items: SidebarItem[];
+    topnav: SidebarItem[];
+    botnav: SidebarItem[];
 }

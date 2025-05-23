@@ -3,13 +3,13 @@ import { Drawer, List, ListItem, ListItemText, Stack } from "@mui/material";
 import { SidebarProps } from "../types/Sidebar.types";
 
 
-export default function Sidebar({items}: SidebarProps) {
+export default function Sidebar({topnav, botnav}: SidebarProps) {
 
   return (
     <Drawer variant={"permanent"} open={false} anchor={"left"}>
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
     <List>
-    {items.map((item, index) => (
+    {topnav.map((item, index) => (
           <ListItem button key={index}>
             <ListItemText primary={item.text} />
           </ListItem>
@@ -18,7 +18,7 @@ export default function Sidebar({items}: SidebarProps) {
       </List>
       
       <List>
-        {items.map((item, index) => (
+        {botnav.map((item, index) => (
             <ListItem button key={index}>
                 <ListItemText primary={item.text} />
             </ListItem>

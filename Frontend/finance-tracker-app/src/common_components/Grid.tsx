@@ -20,8 +20,8 @@ const AgGridExample: React.FC = () => {
     ]);
   
     return (
-      <div style={{ height: "100%", width: "100%" }}>
-        <div className="ag-theme-alpine" style={{ height: "100%", width: "100%" }}>
+      <div >
+        <div className="ag-theme-alpine" style={{ flex:1, height:'100vh', width: '100vw'}}>
           <AgGridReact columnDefs={columnDefs} rowData={rowData} />
         </div>
       </div>

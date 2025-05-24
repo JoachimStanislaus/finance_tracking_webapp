@@ -21,7 +21,7 @@ const AgGridExample: React.FC = () => {
   
     return (
       <div >
-        <div className="ag-theme-alpine" style={{ flex:1, height:'100vh', width: '100vw'}}>
+        <div className="ag-theme-alpine" style={{ flex:1, height:'100vh', width: '100vw', padding: '10px'}}>
           <AgGridReact columnDefs={columnDefs} rowData={rowData} />
         </div>
       </div>

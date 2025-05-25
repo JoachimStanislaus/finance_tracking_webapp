@@ -32,7 +32,7 @@ EXIT;
 
 # Connect to DB
 
-mysql -u myapp_user -p myapp_db
+mysql -u fintracking_user -p fintracking_db
 
 # you need to modify your database URL to use pymysql:
 

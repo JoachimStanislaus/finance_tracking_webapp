@@ -83,7 +83,7 @@ function DemoPageContent({ pathname }: { pathname: string }) {
   }
 }
 
-export default function DashboardLayoutBranding() {
+export default function Dashboard() {
   const router = useDemoRouter("/dashboard");
 
   return (

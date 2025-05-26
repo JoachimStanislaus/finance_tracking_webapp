@@ -112,7 +112,12 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   return (
-    <div>
+    <div style={{
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)"
+    }}>
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">

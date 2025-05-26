@@ -1,12 +1,9 @@
-import Grid from "./common_components/Grid";
 import SignIn from "./common_components/SignIn";
 import SignUp from "./common_components/SignUp";
 import Dashboard from "./components/dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 function App() {
-  
   return (
     <BrowserRouter>
       <Routes>
@@ -16,7 +13,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-    
 }
 
 export default App;

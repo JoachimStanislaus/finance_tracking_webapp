@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
@@ -9,6 +8,7 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
 import { themeLightDark } from "../constants/theme";
 import AgGridExample from "../common_components/Grid";
+import { expensesGridColData, expensesGridColHeaders } from "../constants/expensesGrid";
 
 const NAVIGATION: Navigation = [
   {
@@ -61,7 +61,7 @@ function DemoPageContent({ pathname }: { pathname: string }) {
         overflow: "hidden", // Prevent scroll overflow issues
       }}
     >
-      <AgGridExample isDarkMode={isDarkMode}></AgGridExample>
+      <AgGridExample isDarkMode={isDarkMode} colHeaders={expensesGridColHeaders} gridData={expensesGridColData} ></AgGridExample>
     </Box>
   );
 }

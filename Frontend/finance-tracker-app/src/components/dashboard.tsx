@@ -8,7 +8,10 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
 import { themeLightDark } from "../constants/theme";
 import AgGridExample from "../common_components/Grid";
-import { expensesGridColData, expensesGridColHeaders } from "../constants/expensesGrid";
+import {
+  expensesGridColData,
+  expensesGridColHeaders,
+} from "../constants/expensesGrid";
 
 const NAVIGATION: Navigation = [
   {
@@ -50,20 +53,34 @@ function useToolpadColorScheme() {
 }
 
 function DemoPageContent({ pathname }: { pathname: string }) {
+  console.log(pathname);
   const colorScheme = useToolpadColorScheme();
   const isDarkMode = colorScheme === "dark";
-  return (
-    <Box
-      sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden", // Prevent scroll overflow issues
-      }}
-    >
-      <AgGridExample isDarkMode={isDarkMode} colHeaders={expensesGridColHeaders} gridData={expensesGridColData} ></AgGridExample>
-    </Box>
-  );
+  switch (pathname) {
+    case "/dashboard":
+      return (
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h4">Welcome to the Dashboard Overview</Typography>
+        </Box>
+      );
+    case "/expenses-overview":
+      return (
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden", // Prevent scroll overflow issues
+          }}
+        >
+          <AgGridExample
+            isDarkMode={isDarkMode}
+            colHeaders={expensesGridColHeaders}
+            gridData={expensesGridColData}
+          ></AgGridExample>
+        </Box>
+      );
+  }
 }
 
 export default function DashboardLayoutBranding() {

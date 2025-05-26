@@ -17,9 +17,9 @@ const NAVIGATION: Navigation = [
     icon: <DashboardIcon />,
   },
   {
-    segment: "orders",
-    title: "Orders",
-    icon: <ShoppingCartIcon />,
+    segment: "expenses-overview",
+    title: "Expenses",
+    icon: <DashboardIcon />,
   },
 ];
 

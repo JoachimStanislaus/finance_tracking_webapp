@@ -8,8 +8,7 @@ load_dotenv()
 
 Base = declarative_base()
 
-#DATABASE_URL = os.getenv("DATABASE_URL")  # or hardcode it temporarily
-DATABASE_URL = "mysql+pymysql://fintracking_user:password@localhost/fintracking_db"
+DATABASE_URL = os.getenv("DATABASE_URL")  # or hardcode it temporarily
 
 if DATABASE_URL is None:
     raise ValueError("DATABASE_URL is not set!")

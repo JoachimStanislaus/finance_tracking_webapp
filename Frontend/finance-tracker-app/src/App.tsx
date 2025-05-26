@@ -4,6 +4,7 @@ import SignIn from "./common_components/SignIn";
 import SignUp from "./common_components/signup";
 import DashboardLayoutBranding from "./components/dashboard";
 import { sideBarBotNav, sideBarTopNav } from "./constants/sidebar";
+import CreateExpense from "./common_components/CreateExpense";
 
 
 function App() {

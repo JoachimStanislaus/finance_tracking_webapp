@@ -7,7 +7,7 @@ import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
 import { themeLightDark } from "../constants/theme";
-import AgGridExample from "../common_components/Grid";
+import Grid from "../common_components/Grid";
 import {
   expensesGridColData,
   expensesGridColHeaders,
@@ -73,11 +73,11 @@ function DemoPageContent({ pathname }: { pathname: string }) {
             overflow: "hidden", // Prevent scroll overflow issues
           }}
         >
-          <AgGridExample
+          <Grid
             isDarkMode={isDarkMode}
             colHeaders={expensesGridColHeaders}
             gridData={expensesGridColData}
-          ></AgGridExample>
+          ></Grid>
         </Box>
       );
   }

@@ -14,7 +14,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 // TODO make it dynamic
 
-const AgGridExample: React.FC<{ isDarkMode: boolean, colHeaders: ColDef[], gridData: expensesGridData[] }> = ({ isDarkMode, colHeaders, gridData }) => {
+const Grid: React.FC<{ isDarkMode: boolean, colHeaders: ColDef[], gridData: expensesGridData[] }> = ({ isDarkMode, colHeaders, gridData }) => {
   const themeLightCold = themeQuartz.withPart(colorSchemeLightCold);
   const themeDarkBlue = themeQuartz.withPart(colorSchemeDarkBlue);
   const themeClass = isDarkMode ? themeDarkBlue : themeLightCold;
@@ -38,4 +38,4 @@ const AgGridExample: React.FC<{ isDarkMode: boolean, colHeaders: ColDef[], gridD
   );
 };
 
-export default AgGridExample;
+export default Grid;

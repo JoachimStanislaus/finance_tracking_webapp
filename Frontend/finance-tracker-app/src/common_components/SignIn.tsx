@@ -191,7 +191,11 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
-              <Link href="/" variant="body2" sx={{ alignSelf: "center" }}>
+              <Link
+                href="/sign-up"
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+              >
                 Sign up
               </Link>
             </Typography>

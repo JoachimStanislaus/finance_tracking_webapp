@@ -49,7 +49,18 @@ PYTHONPATH=. uvicorn src.main:app --reload
 deactivate
 ```
 
-### Update requirements.txt
+### Setup relevant env variables
+```
+### Create .env file with relevant details in /src/
+DATABASE_URL = "mysql+pymysql://"
+SECRET_KEY = ""
+
+### Generate secret key with command below
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+
+```
+
+### When you want to update requirements.txt
 
 ```sh
 pip freeze > requirements.txt

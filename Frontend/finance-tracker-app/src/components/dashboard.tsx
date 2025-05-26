@@ -1,14 +1,17 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
 import { themeLightDark } from "../constants/theme";
-import AgGridExample from "../common_components/Grid";
+import Grid from "../common_components/Grid";
+import {
+  expensesGridColData,
+  expensesGridColHeaders,
+} from "../constants/expensesGrid";
 
 const NAVIGATION: Navigation = [
   {
@@ -17,9 +20,9 @@ const NAVIGATION: Navigation = [
     icon: <DashboardIcon />,
   },
   {
-    segment: "orders",
-    title: "Orders",
-    icon: <ShoppingCartIcon />,
+    segment: "expenses-overview",
+    title: "Expenses",
+    icon: <DashboardIcon />,
   },
 ];
 
@@ -50,23 +53,39 @@ function useToolpadColorScheme() {
 }
 
 function DemoPageContent({ pathname }: { pathname: string }) {
+  console.log(pathname);
   const colorScheme = useToolpadColorScheme();
   const isDarkMode = colorScheme === "dark";
-  return (
-    <Box
-      sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden", // Prevent scroll overflow issues
-      }}
-    >
-      <AgGridExample isDarkMode={isDarkMode}></AgGridExample>
-    </Box>
-  );
+  switch (pathname) {
+    case "/dashboard":
+      return (
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h4">
+            Welcome to the Dashboard Overview
+          </Typography>
+        </Box>
+      );
+    case "/expenses-overview":
+      return (
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden", // Prevent scroll overflow issues
+          }}
+        >
+          <Grid
+            isDarkMode={isDarkMode}
+            colHeaders={expensesGridColHeaders}
+            gridData={expensesGridColData}
+          ></Grid>
+        </Box>
+      );
+  }
 }
 
-export default function DashboardLayoutBranding() {
+export default function Dashboard() {
   const router = useDemoRouter("/dashboard");
 
   return (

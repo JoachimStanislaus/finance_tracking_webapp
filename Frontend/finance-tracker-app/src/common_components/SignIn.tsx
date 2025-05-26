@@ -83,7 +83,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       password: data.get("password"),
     });
   };
-
+  // TODO move to util file
   const validateInputs = () => {
     const email = document.getElementById("email") as HTMLInputElement;
     const password = document.getElementById("password") as HTMLInputElement;

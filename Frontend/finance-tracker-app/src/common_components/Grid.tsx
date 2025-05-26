@@ -12,8 +12,6 @@ import { expensesGridData } from "../types/expensesGrid.types";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-// TODO make it dynamic
-
 const Grid: React.FC<{
   isDarkMode: boolean;
   colHeaders: ColDef[];

@@ -1,15 +1,20 @@
-import AgGridExample from "./common_components/Grid";
+import Grid from "./common_components/Grid";
 import SignIn from "./common_components/SignIn";
-import SignUp from "./common_components/signup";
+import SignUp from "./common_components/SignUp";
 import Dashboard from "./components/dashboard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 function App() {
   
   return (
-    <>
-    <Dashboard></Dashboard>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </BrowserRouter>
   );
     
 }

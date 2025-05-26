@@ -67,7 +67,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const validateInputs = () => {
     const email = document.getElementById("email") as HTMLInputElement;
     const password = document.getElementById("password") as HTMLInputElement;
-    const name = document.getElementById("name") as HTMLInputElement;
+    const firstname = document.getElementById("FirstName") as HTMLInputElement;
+    const lastname = document.getElementById("LastName") as HTMLInputElement;
 
     let isValid = true;
 
@@ -89,7 +90,16 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       setPasswordErrorMessage("");
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!firstname.value || firstname.value.length < 1) {
+      setNameError(true);
+      setNameErrorMessage("Name is required.");
+      isValid = false;
+    } else {
+      setNameError(false);
+      setNameErrorMessage("");
+    }
+
+    if (!lastname.value || lastname.value.length < 1) {
       setNameError(true);
       setNameErrorMessage("Name is required.");
       isValid = false;
@@ -102,16 +112,17 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
+    event.preventDefault();
+    if (!validateInputs()) {
       return;
     }
     const data = new FormData(event.currentTarget);
     console.log({
-      name: data.get("name"),
-      lastName: data.get("lastName"),
+      firstName: data.get("FirstName"),
+      lastName: data.get("LastName"),
       email: data.get("email"),
       password: data.get("password"),
+      birthday: data.get("birthday"),
     });
   };
 
@@ -191,11 +202,23 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={passwordError ? "error" : "primary"}
               />
             </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="birthday">Birthday</FormLabel>
+              <TextField
+                required
+                fullWidth
+                name="birthday"
+                type="date"
+                id="birthday"
+                autoComplete="bday"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+              />
+            </FormControl>
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign up
             </Button>

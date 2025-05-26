@@ -60,7 +60,9 @@ function DemoPageContent({ pathname }: { pathname: string }) {
     case "/dashboard":
       return (
         <Box sx={{ p: 2 }}>
-          <Typography variant="h4">Welcome to the Dashboard Overview</Typography>
+          <Typography variant="h4">
+            Welcome to the Dashboard Overview
+          </Typography>
         </Box>
       );
     case "/expenses-overview":

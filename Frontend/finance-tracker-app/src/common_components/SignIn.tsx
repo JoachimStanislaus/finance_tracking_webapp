@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "./ForgotPassword";
+import { login } from "../services/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -73,15 +74,34 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
+    event.preventDefault();
+    if (!validateInputs()) {
       return;
     }
+
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+
+    const email = data.get("email");
+    const password = data.get("password");
+
+    if (
+      typeof email !== "string" ||
+      typeof password !== "string" 
+    ) {
+      console.error("Missing or invalid form fields");
+      return;
+    }
+
+    const payload = {
+      email,
+      password
+    }
+    
+    login(payload)
   };
   // TODO move to util file
   const validateInputs = () => {
@@ -178,7 +198,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign in
             </Button>

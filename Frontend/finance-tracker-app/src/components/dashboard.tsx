@@ -53,7 +53,6 @@ function useToolpadColorScheme() {
 }
 
 function DemoPageContent({ pathname }: { pathname: string }) {
-  console.log(pathname);
   const colorScheme = useToolpadColorScheme();
   const isDarkMode = colorScheme === "dark";
   switch (pathname) {

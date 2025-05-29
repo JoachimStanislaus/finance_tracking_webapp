@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
+import { register } from "../services/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -56,6 +57,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
@@ -64,6 +66,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState("");
 
+  // TODO move to util file
   const validateInputs = () => {
     const email = document.getElementById("email") as HTMLInputElement;
     const password = document.getElementById("password") as HTMLInputElement;
@@ -111,23 +114,48 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     return isValid;
   };
 
+  // TODO move to util file
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateInputs()) {
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get("FirstName"),
-      lastName: data.get("LastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-      birthday: data.get("birthday"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+    const first_name = data.get("FirstName");
+    const last_name = data.get("LastName");
+    const birthday = data.get("birthday");
+
+    if (
+      typeof email !== "string" ||
+      typeof password !== "string" ||
+      typeof first_name !== "string" ||
+      typeof last_name !== "string" ||
+      typeof birthday !== "string"
+    ) {
+      console.error("Missing or invalid form fields");
+      return;
+    }
+
+    const payload = {
+      email,
+      password,
+      first_name,
+      last_name,
+      birthday,
+    };
+    
+    register(payload)
   };
 
   return (
-    <div>
+    <div style={{
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)"
+    }}>
       <CssBaseline enableColorScheme />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
@@ -215,11 +243,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 InputLabelProps={{ shrink: true }}
               />
             </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
+            <Button type="submit" fullWidth variant="contained">
               Sign up
             </Button>
           </Box>

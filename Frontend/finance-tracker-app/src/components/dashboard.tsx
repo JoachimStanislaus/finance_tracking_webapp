@@ -8,10 +8,12 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
 import { themeLightDark } from "../constants/theme";
 import Grid from "../common_components/Grid";
+import Button from "@mui/material/Button";
 import {
   expensesGridColData,
   expensesGridColHeaders,
 } from "../constants/expensesGrid";
+import CreateExpense from "../common_components/CreateExpense";
 
 const NAVIGATION: Navigation = [
   {
@@ -53,6 +55,11 @@ function useToolpadColorScheme() {
 }
 
 function DemoPageContent({ pathname }: { pathname: string }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const colorScheme = useToolpadColorScheme();
   const isDarkMode = colorScheme === "dark";
   switch (pathname) {
@@ -74,6 +81,12 @@ function DemoPageContent({ pathname }: { pathname: string }) {
             overflow: "hidden", // Prevent scroll overflow issues
           }}
         >
+          <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 1, marginRight: 1}}>
+            <Button variant="contained" onClick={handleOpen}>
+              New Expense
+            </Button>
+          </Box>
+          <CreateExpense open={open} handleClose={handleClose} />
           <Grid
             isDarkMode={isDarkMode}
             colHeaders={expensesGridColHeaders}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,6 +16,8 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "./ForgotPassword";
 import { login } from "../services/auth";
+import { loginRequest } from "../actions/authActions";
+import { AuthActionTypes } from "../types/authTypes.types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -74,6 +77,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const dispatch = useDispatch();
     event.preventDefault();
     if (!validateInputs()) {
       return;
@@ -88,20 +92,19 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const email = data.get("email");
     const password = data.get("password");
 
-    if (
-      typeof email !== "string" ||
-      typeof password !== "string" 
-    ) {
+    if (typeof email !== "string" || typeof password !== "string") {
       console.error("Missing or invalid form fields");
       return;
     }
 
     const payload = {
       email,
-      password
-    }
-    
-    login(payload)
+      password,
+    };
+    dispatch({
+      type: AuthActionTypes.LOGIN_REQUEST,
+      payload: payload,
+    });
   };
   // TODO move to util file
   const validateInputs = () => {
@@ -132,12 +135,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   return (
-    <div style={{
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)"
-    }}>
+    <div
+      style={{
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
@@ -194,11 +199,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               />
             </FormControl>
             <ForgotPassword open={open} handleClose={handleClose} />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
+            <Button type="submit" fullWidth variant="contained">
               Sign in
             </Button>
             <Link

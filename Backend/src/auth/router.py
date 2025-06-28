@@ -33,7 +33,7 @@ async def login_for_access_token(
     token = utils.create_access_token(data={"sub": db_user.email})
 
     response = JSONResponse(
-        content={"user": user_data, "message": "Login successful"}
+        content={"user": user_data}
     )
     response.set_cookie(
         key="access_token",

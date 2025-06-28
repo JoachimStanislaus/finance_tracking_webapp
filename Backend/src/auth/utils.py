@@ -34,10 +34,8 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-def get_current_user(
-    request: Request,
-    db: Session = Depends(db.get_db)
-):
+
+def get_current_user(request: Request, db: Session = Depends(db.get_db)):
     token = request.cookies.get("access_token")
     if not token:
         raise HTTPException(
@@ -56,5 +54,5 @@ def get_current_user(
     user = db.query(models.User).filter(models.User.email == email).first()
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
-    
+
     return user

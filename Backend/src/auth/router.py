@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/users/")
-def get_users( _ = Depends(utils.get_current_user)):
+def get_users(_=Depends(utils.get_current_user)):
     return {"message": "user is logged in"}
 
 
@@ -23,21 +23,25 @@ async def login_for_access_token(
     user: schemas.UserLogin, db: Session = Depends(db.get_db)
 ):
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    user_data = schemas.UserResponse.from_orm(db_user).dict()
+    user_data['birthday'] = user_data['birthday'].isoformat() 
+
     if not db_user or not utils.verify_password(user.password, db_user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
     token = utils.create_access_token(data={"sub": db_user.email})
 
-    
-    response = JSONResponse(content={"message": "Login successful"})
+    response = JSONResponse(
+        content={"user": user_data, "message": "Login successful"}
+    )
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
-        secure=True,           # Only over HTTPS in production
-        samesite="Lax",        # Or "Strict"/"None" based on your setup
-        max_age=(utils.ACCESS_TOKEN_EXPIRE_MINUTES*60),
+        secure=True,  # Only over HTTPS in production
+        samesite="Lax",  # Or "Strict"/"None" based on your setup
+        max_age=(utils.ACCESS_TOKEN_EXPIRE_MINUTES * 60),
     )
     return response
 
@@ -78,7 +82,8 @@ async def register_user(user: schemas.UserCreate, db: Session = Depends(db.get_d
 async def reset_password(email: str):
     return True
 
+
 @router.post("/logout", status_code=200)
-async def logout(response: Response, _ = Depends(utils.get_current_user)):
+async def logout(response: Response, _=Depends(utils.get_current_user)):
     response.delete_cookie("access_token")
     return {"message": "Successfully logged out"}

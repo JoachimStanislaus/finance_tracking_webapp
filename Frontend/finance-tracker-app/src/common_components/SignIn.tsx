@@ -1,10 +1,8 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Divider from "@mui/material/Divider";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -15,9 +13,9 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "./ForgotPassword";
-import { login } from "../services/auth";
-import { loginRequest } from "../actions/authActions";
 import { AuthActionTypes } from "../types/authTypes.types";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../reducers/initialState";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -68,6 +66,16 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  React.useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -77,7 +85,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const dispatch = useDispatch();
     event.preventDefault();
     if (!validateInputs()) {
       return;
@@ -217,7 +224,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
               <Link
-                href="/sign-up"
+                href="/register"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >

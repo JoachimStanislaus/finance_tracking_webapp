@@ -1,10 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
@@ -13,7 +11,10 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import { register } from "../services/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthActionTypes } from "../types/authTypes.types";
+import { RootState } from "../reducers/initialState";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -57,7 +58,6 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
@@ -65,6 +65,16 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState("");
+  const { isRegistered } = useSelector((state: RootState) => state.register);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isRegistered) {
+      navigate("/login");
+    }
+  }, [isRegistered, navigate]);
 
   // TODO move to util file
   const validateInputs = () => {
@@ -145,17 +155,21 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       last_name,
       birthday,
     };
-    
-    register(payload)
+    dispatch({
+      type: AuthActionTypes.SIGNUP_REQUEST,
+      payload: payload,
+    });
   };
 
   return (
-    <div style={{
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)"
-    }}>
+    <div
+      style={{
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
       <CssBaseline enableColorScheme />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
@@ -253,11 +267,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography sx={{ textAlign: "center" }}>
               Already have an account?{" "}
-              <Link
-                href="/login"
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-              >
+              <Link href="/login" variant="body2" sx={{ alignSelf: "center" }}>
                 Sign in
               </Link>
             </Typography>

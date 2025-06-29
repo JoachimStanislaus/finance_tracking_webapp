@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { DemoProvider, useDemoRouter } from "@toolpad/core/internal";
@@ -26,6 +25,11 @@ const NAVIGATION: Navigation = [
     title: "Expenses",
     icon: <DashboardIcon />,
   },
+  {
+    segment: "Account",
+    title: "Account",
+    icon: <DashboardIcon />,
+  }
 ];
 
 function useToolpadColorScheme() {

@@ -3,3 +3,4 @@ Backend/app.log
 Backend/src/app.log
 Backend/src/.env
 Frontend/node_modules/
+.DS_Store

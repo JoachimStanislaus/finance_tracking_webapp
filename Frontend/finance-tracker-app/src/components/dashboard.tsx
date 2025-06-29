@@ -26,7 +26,7 @@ const NAVIGATION: Navigation = [
     icon: <DashboardIcon />,
   },
   {
-    segment: "Account",
+    segment: "account",
     title: "Account",
     icon: <DashboardIcon />,
   }
@@ -98,6 +98,12 @@ function DemoPageContent({ pathname }: { pathname: string }) {
           ></Grid>
         </Box>
       );
+    case "/account":
+        return (
+          <div>
+            this is account page
+          </div>
+        );
   }
 }
 
